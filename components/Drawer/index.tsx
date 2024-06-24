@@ -1,6 +1,7 @@
+'use client';
+
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
@@ -9,19 +10,39 @@ import {
 } from '@/components/ui/drawer';
 import { Button } from '../ui/button';
 
+import { getFullTitleNameAndDesc } from '@/utils/helpers';
+import { usePathname, useSearchParams } from 'next/navigation';
 const BottomDrawer = () => {
+  const pathName = usePathname();
+  const searchParams = useSearchParams();
+  const tabName = searchParams.get('tab');
+  let isDrawerOpen = searchParams.get('isDrawerOpen') === 'true' ?? false;
+
+  const fullTitleName = getFullTitleNameAndDesc(tabName!);
+
+  const handleCloseDrawer = () => {
+    window.history.pushState(null, '', `${pathName}`);
+  };
+
   return (
-    <Drawer>
+    <Drawer open={isDrawerOpen} onClose={handleCloseDrawer}>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-          <DrawerDescription>This action cannot be undone.</DrawerDescription>
+          <DrawerTitle>{fullTitleName?.title}</DrawerTitle>
+          <DrawerDescription>{fullTitleName?.desc}</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
-          <Button>Submit</Button>
-          <DrawerClose>
+          <Button
+            onClick={() => {
+              handleCloseDrawer();
+            }}
+          >
+            Submit
+          </Button>
+
+          {/* <DrawerClose>
             <Button variant='outline'>Cancel</Button>
-          </DrawerClose>
+          </DrawerClose> */}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

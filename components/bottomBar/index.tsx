@@ -7,17 +7,17 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
 import { useGlobalContext } from '../context/store';
 
 export default function BottomNav() {
   const router = useRouter();
-
+  const pathName = usePathname();
   const { selectedBottomNav, setSelectedBottomNav } = useGlobalContext();
 
   const [value, setValue] = React.useState(0);
-
+  console.log(pathName);
   console.log(selectedBottomNav);
 
   return (
@@ -29,7 +29,7 @@ export default function BottomNav() {
         <BottomNavigation
           showLabels
           value={value}
-          onChange={(event, newValue) => {
+          onChange={(_, newValue) => {
             setValue(newValue);
             switch (newValue) {
               case 0:
@@ -37,7 +37,7 @@ export default function BottomNav() {
                 window.history.pushState(
                   null,
                   '',
-                  `/?isDrawerOpen=true&tab=historical`
+                  `${pathName}?isDrawerOpen=true&tab=historical`
                 );
                 break;
               case 1:
@@ -45,7 +45,7 @@ export default function BottomNav() {
                 window.history.pushState(
                   null,
                   '',
-                  `/?isDrawerOpen=true&tab=input`
+                  `${pathName}?isDrawerOpen=true&tab=input`
                 );
                 break;
               case 2:
@@ -53,7 +53,7 @@ export default function BottomNav() {
                 window.history.pushState(
                   null,
                   '',
-                  `/?isDrawerOpen=true&tab=stats`
+                  `${pathName}?isDrawerOpen=true&tab=stats`
                 );
                 break;
               default:
