@@ -1,5 +1,4 @@
 'use client';
-
 import {
   Drawer,
   DrawerContent,
@@ -8,10 +7,26 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/drawer';
+import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { Button } from '../ui/button';
 
 import { getFullTitleNameAndDesc } from '@/utils/helpers';
 import { usePathname, useSearchParams } from 'next/navigation';
+import LiquidInput from '../inputs/components/liquid';
+
+const getDrawerComp = ({
+  pathName,
+  tabName,
+}: {
+  pathName: string;
+  tabName: string | null;
+}) => {
+  if (pathName === '/' && tabName === 'input') {
+    console.log('heee');
+    return <LiquidInput />;
+  }
+};
+
 const BottomDrawer = () => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -20,6 +35,8 @@ const BottomDrawer = () => {
 
   const fullTitleName = getFullTitleNameAndDesc(tabName!);
 
+  const drawerComponent = getDrawerComp({ pathName, tabName });
+
   const handleCloseDrawer = () => {
     window.history.pushState(null, '', `${pathName}`);
   };
@@ -27,11 +44,22 @@ const BottomDrawer = () => {
   return (
     <Drawer open={isDrawerOpen} onClose={handleCloseDrawer}>
       <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>{fullTitleName?.title}</DrawerTitle>
-          <DrawerDescription>{fullTitleName?.desc}</DrawerDescription>
-        </DrawerHeader>
+        {tabName === 'input' ? (
+          <VisuallyHidden.Root>
+            <DrawerHeader>
+              <DrawerTitle>{fullTitleName?.title}</DrawerTitle>
+              <DrawerDescription>{fullTitleName?.desc}</DrawerDescription>
+            </DrawerHeader>
+          </VisuallyHidden.Root>
+        ) : (
+          <DrawerHeader>
+            <DrawerTitle>{fullTitleName?.title}</DrawerTitle>
+            <DrawerDescription>{fullTitleName?.desc}</DrawerDescription>
+          </DrawerHeader>
+        )}
+
         <DrawerFooter>
+          {drawerComponent}
           <Button
             onClick={() => {
               handleCloseDrawer();
@@ -39,10 +67,6 @@ const BottomDrawer = () => {
           >
             Submit
           </Button>
-
-          {/* <DrawerClose>
-            <Button variant='outline'>Cancel</Button>
-          </DrawerClose> */}
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
