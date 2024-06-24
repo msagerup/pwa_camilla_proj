@@ -1,6 +1,11 @@
 // app/layout.ts
-
+import BottomDrawer from '@/components/Drawer';
+import BottomNav from '@/components/bottomBar';
+import GlobalContextProvider from '@/components/context/store';
 import { HeaderNav } from '@/components/menu';
+import theme from '@/components/theme';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
+import { ThemeProvider } from '@mui/material/styles';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
@@ -37,7 +42,15 @@ export default function RootLayout({
         <header className='container'>
           <HeaderNav />
         </header>
-        {children}
+        <AppRouterCacheProvider>
+          <ThemeProvider theme={theme}>
+            <GlobalContextProvider>
+              {children}
+              <BottomDrawer />
+              <BottomNav />
+            </GlobalContextProvider>
+          </ThemeProvider>
+        </AppRouterCacheProvider>
       </body>
     </html>
   );
