@@ -1,14 +1,18 @@
-import { login, signup } from './actions';
+import { LoginCode } from '@/components/LoginCode';
+import MainPageHeader from '@/components/headers/pageHeader/mainPage';
 
-export default function LoginPage() {
+export default function Home() {
   return (
-    <form>
-      <label htmlFor='email'>Email:</label>
-      <input id='email' name='email' type='email' required />
-      <label htmlFor='password'>Password:</label>
-      <input id='password' name='password' type='password' required />
-      <button formAction={login}>Log in</button>
-      <button formAction={signup}>Sign up</button>
-    </form>
+    <div className=' h-screen flex flex-col justify-between  bg-blue-300'>
+      <div className='py-20 bg-white'>
+        <MainPageHeader />
+      </div>
+      <div className='container px-5 mx-auto'>
+        <div className='bg-gray-100 py-5 flex  justify-center '>
+          <LoginCode />
+        </div>
+      </div>
+      <div></div>
+    </div>
   );
 }

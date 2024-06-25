@@ -2,8 +2,9 @@
 import BottomDrawer from '@/components/Drawer';
 import BottomNav from '@/components/bottomBar';
 import GlobalContextProvider from '@/components/context/store';
-import { HeaderNav } from '@/components/menu';
+import MobileNavBar from '@/components/mobileNavBar';
 import theme from '@/components/theme';
+import { Toaster } from '@/components/ui/toaster';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
 import { Inter } from 'next/font/google';
@@ -39,13 +40,15 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <header className='container'>
-          <HeaderNav />
-        </header>
+        {/* <HeaderNav /> */}
+
+        <MobileNavBar />
+
         <AppRouterCacheProvider>
           <ThemeProvider theme={theme}>
             <GlobalContextProvider>
               {children}
+              <Toaster />
               <BottomDrawer />
               <BottomNav />
             </GlobalContextProvider>

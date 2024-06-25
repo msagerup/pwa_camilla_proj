@@ -12,6 +12,8 @@ import { Button } from '../ui/button';
 
 import { getFullTitleNameAndDesc } from '@/utils/helpers';
 import { usePathname, useSearchParams } from 'next/navigation';
+import HistoricalCards from '../Cards/HistoricalCards';
+import { DatePicker } from '../DatePicker';
 import LiquidInput from '../inputs/components/liquid';
 
 const getDrawerComp = ({
@@ -22,8 +24,19 @@ const getDrawerComp = ({
   tabName: string | null;
 }) => {
   if (pathName === '/' && tabName === 'input') {
-    console.log('heee');
     return <LiquidInput />;
+  }
+
+  if (tabName === 'stats') {
+    return <HistoricalCards />;
+  }
+
+  if (tabName === 'historical') {
+    return (
+      <div className='flex justify-center '>
+        <DatePicker />
+      </div>
+    );
   }
 };
 
@@ -57,15 +70,14 @@ const BottomDrawer = () => {
             <DrawerDescription>{fullTitleName?.desc}</DrawerDescription>
           </DrawerHeader>
         )}
-
+        {drawerComponent}
         <DrawerFooter>
-          {drawerComponent}
           <Button
             onClick={() => {
               handleCloseDrawer();
             }}
           >
-            Submit
+            Close
           </Button>
         </DrawerFooter>
       </DrawerContent>

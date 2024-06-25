@@ -1,9 +1,8 @@
 'use client';
 
 import AddIcon from '@mui/icons-material/Add';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import RestoreIcon from '@mui/icons-material/Restore';
-
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
@@ -19,6 +18,8 @@ export default function BottomNav() {
   const [value, setValue] = React.useState(0);
   console.log(pathName);
   console.log(selectedBottomNav);
+
+  if (pathName.includes('/login')) return null;
 
   return (
     <>
@@ -61,12 +62,9 @@ export default function BottomNav() {
             }
           }}
         >
-          <BottomNavigationAction
-            label='Historical values'
-            icon={<RestoreIcon />}
-          />
+          <BottomNavigationAction label='Historical' icon={<RestoreIcon />} />
           <BottomNavigationAction label='Input' icon={<AddIcon />} />
-          <BottomNavigationAction label='Output' icon={<LocationOnIcon />} />
+          <BottomNavigationAction label='Charts' icon={<BarChartIcon />} />
         </BottomNavigation>
       </Paper>
     </>
