@@ -8,7 +8,7 @@ import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
 import { usePathname, useRouter } from 'next/navigation';
 import * as React from 'react';
-import { useGlobalContext } from '../context/store';
+import { useGlobalContext } from '../../context/store';
 
 export default function BottomNav() {
   const router = useRouter();
