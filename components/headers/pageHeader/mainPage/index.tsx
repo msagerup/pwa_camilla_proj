@@ -5,7 +5,7 @@ const MainPageHeader = () => {
       <div className='flex items-center gap-4 mt-2'>
         <div className='w-20 h-1 bg-gray-300' />
         <p className='text-gray-500 text-sm text-left'>
-          a portal of SIADH and hypothermia management
+          a portal of SIADH and hyponatremia management
         </p>
       </div>
     </div>

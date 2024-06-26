@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
@@ -10,10 +11,10 @@ const MobileNavBar = () => {
 
   return (
     <header className='w-full bg-background border-b fixed top-0 '>
-      <div className='flex items-center justify-between h-12 px-4 md:px-6'>
+      <div className='flex items-center justify-between h-12 pr-4 pl-2 md:px-6'>
         <Link href='#' className='flex items-center gap-2' prefetch={false}>
           {/* <MountainIcon className="h-6 w-6" /> */}
-          logo
+          <Image src='/images/top_logo.png' height={40} width={40} alt='logo' />
           <span className='sr-only'>Fluid Restriction tracker</span>
         </Link>
         <div>h</div>
