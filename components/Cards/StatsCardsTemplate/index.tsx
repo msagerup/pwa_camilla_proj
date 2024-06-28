@@ -5,7 +5,6 @@ import Link from 'next/link';
 interface StatsCardTemplateProps {
   link: string;
   image: string;
-  imageHeight: string;
   altImageText: string;
   buttonText: string;
   header: string;
@@ -15,7 +14,6 @@ interface StatsCardTemplateProps {
 const StatsCardTemplate = ({
   link,
   image,
-  imageHeight,
   altImageText,
   header,
   desc,
@@ -28,7 +26,7 @@ const StatsCardTemplate = ({
         alt={altImageText}
         width={400}
         height={300}
-        className={`object-cover w-full h-${imageHeight}`}
+        className={`object-cover w-full h-32`}
       />
       <div className='p-4 flex flex-col justify-between'>
         <h3 className='text-sm font-bold'>{header}</h3>
