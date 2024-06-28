@@ -1,5 +1,6 @@
 // app/layout.ts
 import BottomDrawer from '@/components/Drawer';
+import SuspenseWrapper from '@/components/SuspenseWrapper';
 import BottomNav from '@/components/bottomBar';
 import MobileNavBar from '@/components/mobileNavBar';
 import theme from '@/components/theme';
@@ -7,30 +8,56 @@ import { Toaster } from '@/components/ui/toaster';
 import GlobalContextProvider from '@/context/store';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v13-appRouter';
 import { ThemeProvider } from '@mui/material/styles';
+import { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// export const metadata: Metadata = {
-//   title: 'PWA NextJS',
-//   description: "It's a simple progressive web application made with NextJS",
-//   generator: 'Next.js',
-//   manifest: '/manifest.json',
-//   keywords: ['nextjs', 'next14', 'pwa', 'next-pwa'],
-//   authors: [
-//     {
-//       name: 'Magnus Sagerup',
-//       url: 'https://www.linkedin.com/in/msagerup/',
-//     },
-//   ],
-//   viewport:
-//     'minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover',
-//   icons: [
-//     { rel: 'apple-touch-icon', url: 'icons/icon-128x128.png' },
-//     { rel: 'icon', url: 'icons/icon-128x128.png' },
-//   ],
-// };
+const APP_NAME = 'PWA App';
+const APP_DEFAULT_TITLE = 'My Awesome PWA App';
+const APP_TITLE_TEMPLATE = '%s - PWA App';
+const APP_DESCRIPTION = 'Best PWA app in the world!';
+
+export const metadata: Metadata = {
+  applicationName: APP_NAME,
+  title: {
+    default: APP_DEFAULT_TITLE,
+    template: APP_TITLE_TEMPLATE,
+  },
+  description: APP_DESCRIPTION,
+  manifest: '/manifest.json',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: APP_DEFAULT_TITLE,
+    // startUpImage: [],
+  },
+  formatDetection: {
+    telephone: false,
+  },
+  openGraph: {
+    type: 'website',
+    siteName: APP_NAME,
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+  twitter: {
+    card: 'summary',
+    title: {
+      default: APP_DEFAULT_TITLE,
+      template: APP_TITLE_TEMPLATE,
+    },
+    description: APP_DESCRIPTION,
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: '#FFFFFF',
+};
 
 export default function RootLayout({
   children,
@@ -48,7 +75,9 @@ export default function RootLayout({
               <MobileNavBar />
               {children}
               <Toaster />
-              <BottomDrawer />
+              <SuspenseWrapper>
+                <BottomDrawer />
+              </SuspenseWrapper>
               <BottomNav />
             </GlobalContextProvider>
           </ThemeProvider>

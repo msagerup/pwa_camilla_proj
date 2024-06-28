@@ -87,7 +87,7 @@ export default class RenderAllowedLiquid extends PureComponent {
     activeIndex: 0,
   };
 
-  onPieEnter = (_, index: any) => {
+  onPieEnter = (_: any, index: any) => {
     this.setState({
       activeIndex: index,
     });

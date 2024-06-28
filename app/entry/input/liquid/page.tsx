@@ -1,4 +1,4 @@
-import LiquidInput from '@/components/inputs/components/liquid';
+import LiquidInput from '@/components/inputs/components/liquid/input';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
