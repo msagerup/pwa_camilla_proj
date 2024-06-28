@@ -55,7 +55,6 @@ const BottomDrawer = () => {
   const tabName = searchParams.get('tab');
   let isDrawerOpen = searchParams.get('isDrawerOpen') === 'true' ?? false;
 
-  console.log(pathName);
 
   const fullTitleName = getFullTitleNameAndDesc(tabName!);
 

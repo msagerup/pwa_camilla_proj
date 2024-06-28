@@ -1,5 +1,6 @@
 'use client';
 
+import { FluidRecord } from '@/utils/types';
 import {
   createContext,
   Dispatch,
@@ -14,6 +15,10 @@ interface ContextProps {
   isDrawerOpen: boolean;
   timeZone: string;
   dropDownInfoId: string;
+  fluidInputRecords: FluidRecord[];
+  fluidOutputRecords: FluidRecord[];
+  setFluidOutputRecords: Dispatch<SetStateAction<FluidRecord[]>>;
+  setFluidInputRecords: Dispatch<SetStateAction<FluidRecord[]>>;
   setDropDownInfoID: Dispatch<SetStateAction<string>>;
   setTimeZone: Dispatch<SetStateAction<string>>;
   setDrawerOpen: Dispatch<SetStateAction<boolean>>;
@@ -25,6 +30,10 @@ const defaultState: ContextProps = {
   isDrawerOpen: false,
   timeZone: '-0400',
   dropDownInfoId: '',
+  fluidInputRecords: [],
+  fluidOutputRecords: [],
+  setFluidOutputRecords: () => [],
+  setFluidInputRecords: () => [],
   setDropDownInfoID: () => typeof String,
   setTimeZone: () => typeof String,
   setDrawerOpen: () => typeof boolean,
@@ -42,6 +51,10 @@ export default function GlobalContextProvider({
   const [isDrawerOpen, setDrawerOpen] = useState<boolean>(false);
   const [timeZone, setTimeZone] = useState<string>('-0400');
   const [dropDownInfoId, setDropDownInfoID] = useState<string>('');
+  const [fluidOutputRecords, setFluidOutputRecords] = useState<FluidRecord[]>(
+    []
+  );
+  const [fluidInputRecords, setFluidInputRecords] = useState<FluidRecord[]>([]);
 
   return (
     <GlobalContext.Provider
@@ -50,6 +63,10 @@ export default function GlobalContextProvider({
         isDrawerOpen,
         timeZone,
         dropDownInfoId,
+        fluidOutputRecords,
+        fluidInputRecords,
+        setFluidInputRecords,
+        setFluidOutputRecords,
         setDropDownInfoID,
         setTimeZone,
         setDrawerOpen,

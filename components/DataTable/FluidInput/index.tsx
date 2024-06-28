@@ -15,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useGlobalContext } from '@/context/store';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import ContentHeader from '../../headers/contentHeader';
@@ -22,19 +23,19 @@ import { ScrollArea } from '../../ui/scroll-area';
 import Action from './components/Action';
 
 export function DataTable() {
-  const [records, setRecords] = useState<any[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const { fluidInputRecords, setFluidInputRecords } = useGlobalContext();
 
   useEffect(() => {
     const calcTotal = () => {
       let total = 0;
-      records.forEach((item) => {
+      fluidInputRecords.forEach((item) => {
         total += item.amount;
       });
       setTotal(total);
     };
     calcTotal();
-  }, [records]);
+  }, [fluidInputRecords]);
 
   // Fetch initial data
   const fetchAllRecords = async () => {
@@ -43,7 +44,7 @@ export function DataTable() {
     if (error) {
       console.error('Error fetching records:', error);
     } else {
-      setRecords(data);
+      setFluidInputRecords(data);
     }
   };
 
@@ -62,17 +63,21 @@ export function DataTable() {
           // Handle the real-time payload
           switch (payload.eventType) {
             case 'INSERT':
-              setRecords((prevRecords) => [...prevRecords, payload.new]);
+              setFluidInputRecords((prevRecords) => [
+                ...prevRecords,
+                payload.new,
+              ]);
+
               break;
             case 'UPDATE':
-              setRecords((prevRecords) =>
+              setFluidInputRecords((prevRecords) =>
                 prevRecords.map((record) =>
                   record.id === payload.new.id ? payload.new : record
                 )
               );
               break;
             case 'DELETE':
-              setRecords((prevRecords) =>
+              setFluidInputRecords((prevRecords) =>
                 prevRecords.filter((record) => record.id !== payload.old.id)
               );
               break;
@@ -110,7 +115,7 @@ export function DataTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {records?.map((data) => (
+            {fluidInputRecords?.map((data) => (
               <TableRow key={data.id}>
                 <TableCell className='text-left'>
                   {format(data.created_at, 'dd MMM')}{' '}
