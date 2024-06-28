@@ -6,19 +6,18 @@ import RestoreIcon from '@mui/icons-material/Restore';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import Paper from '@mui/material/Paper';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import * as React from 'react';
 import { useGlobalContext } from '../../context/store';
 
 export default function BottomNav() {
-  const router = useRouter();
-  const pathName = usePathname();
-  const { selectedBottomNav, setSelectedBottomNav } = useGlobalContext();
-
   const [value, setValue] = React.useState(0);
-  console.log(pathName);
-  console.log(selectedBottomNav);
+  const { setSelectedBottomNav } = useGlobalContext();
 
+  const pathName = usePathname();
+  const isInputOrOutputButtonName = pathName.includes('output');
+
+  // Hide on login route
   if (pathName.includes('/login')) return null;
 
   return (
@@ -42,11 +41,15 @@ export default function BottomNav() {
                 );
                 break;
               case 1:
-                setSelectedBottomNav('input');
+                setSelectedBottomNav(
+                  isInputOrOutputButtonName ? 'output' : 'input'
+                );
                 window.history.pushState(
                   null,
                   '',
-                  `${pathName}?isDrawerOpen=true&tab=input`
+                  `${pathName}?isDrawerOpen=true&tab=${
+                    isInputOrOutputButtonName ? 'output' : 'input'
+                  }`
                 );
                 break;
               case 2:
@@ -63,7 +66,10 @@ export default function BottomNav() {
           }}
         >
           <BottomNavigationAction label='Historical' icon={<RestoreIcon />} />
-          <BottomNavigationAction label='Input' icon={<AddIcon />} />
+          <BottomNavigationAction
+            label={isInputOrOutputButtonName ? 'Output' : 'Input'}
+            icon={<AddIcon />}
+          />
           <BottomNavigationAction label='Charts' icon={<BarChartIcon />} />
         </BottomNavigation>
       </Paper>

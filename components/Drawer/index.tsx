@@ -14,7 +14,8 @@ import { getFullTitleNameAndDesc } from '@/utils/helpers';
 import { usePathname, useSearchParams } from 'next/navigation';
 import HistoricalCards from '../Cards/HistoricalCards';
 import { DatePicker } from '../DatePicker';
-import LiquidInput from '../inputs/components/liquid';
+import LiquidInput from '../inputs/components/liquid/input';
+import LiquidOutput from '../inputs/components/liquid/output';
 
 const getDrawerComp = ({
   pathName,
@@ -23,6 +24,14 @@ const getDrawerComp = ({
   pathName: string;
   tabName: string | null;
 }) => {
+  if (pathName === '/' && tabName === 'input') {
+    return <LiquidInput />;
+  }
+
+  if (pathName === '/entry/output/liquid' && tabName === 'output') {
+    return <LiquidOutput />;
+  }
+
   if (pathName === '/' && tabName === 'input') {
     return <LiquidInput />;
   }
@@ -46,6 +55,8 @@ const BottomDrawer = () => {
   const tabName = searchParams.get('tab');
   let isDrawerOpen = searchParams.get('isDrawerOpen') === 'true' ?? false;
 
+  console.log(pathName);
+
   const fullTitleName = getFullTitleNameAndDesc(tabName!);
 
   const drawerComponent = getDrawerComp({ pathName, tabName });
@@ -57,7 +68,7 @@ const BottomDrawer = () => {
   return (
     <Drawer open={isDrawerOpen} onClose={handleCloseDrawer}>
       <DrawerContent>
-        {tabName === 'input' ? (
+        {tabName === 'input' || tabName?.includes('output') ? (
           <VisuallyHidden.Root>
             <DrawerHeader>
               <DrawerTitle>{fullTitleName?.title}</DrawerTitle>

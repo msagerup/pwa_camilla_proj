@@ -24,7 +24,7 @@ const HistoricalCards = () => {
             className='object-cover w-full h-20'
           />
           <div className='p-4 flex flex-col justify-between'>
-            <h3 className='text-sm font-bold'>Liquid input/output</h3>
+            <h3 className='text-sm font-bold'>Fluid input/output</h3>
             <p className='text-sm text-muted-foreground pt-3'>
               Charts for liquid
             </p>

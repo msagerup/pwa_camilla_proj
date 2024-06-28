@@ -8,15 +8,20 @@ import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
 import TimeDisplay from './components/TimeDisplay';
 const MobileNavBar = () => {
   const pathName = usePathname();
-  console.log(pathName);
   const router = useRouter();
+
   if (pathName.includes('/login')) return null;
+
+  console.log(pathName);
+
+  const isActive = pathName === '/';
+
+  console.log(isActive);
 
   return (
     <header className='w-full bg-background border-b fixed top-0 '>
       <div className='flex items-center justify-between h-12 pr-4 pl-2 md:px-6'>
         <Link href='#' className='flex items-center gap-2' prefetch={false}>
-          {/* <MountainIcon className="h-6 w-6" /> */}
           <Image src='/images/top_logo.png' height={40} width={40} alt='logo' />
           <span className='sr-only'>Fluid Restriction tracker</span>
           <div className='min-w-3'>
@@ -42,25 +47,36 @@ const MobileNavBar = () => {
 
         <div className='flex gap-5 w-full justify-end'>
           <Tabs>
-            <TabsList className='rounded-none'>
+            <TabsList className='rounded-none gap-1'>
               <TabsTrigger
                 onClick={() => router.push('/', { scroll: false })}
                 value='input'
+                className={
+                  isActive
+                    ? ' rounded-none h-8 uppercase text-xs bg-blue-400 text-white underline underline-offset-4'
+                    : ' rounded-none h-8 uppercase text-xs'
+                }
               >
-                Liquid input
+                Fluid input
               </TabsTrigger>
-              <TabsTrigger value='output'>Liquid output</TabsTrigger>
+              <TabsTrigger
+                onClick={() =>
+                  router.push('/entry/output/liquid', { scroll: false })
+                }
+                value='output'
+                className={
+                  !isActive
+                    ? ' rounded-none h-8 uppercase text-xs bg-blue-400 text-white underline underline-offset-4 '
+                    : ' rounded-none h-8 uppercase  text-xs'
+                }
+              >
+                Fluid output
+              </TabsTrigger>
               {/* <TabsTrigger value='charts'>Charts</TabsTrigger> */}
             </TabsList>
           </Tabs>
-          {/* 
-          <div className='text-gray-600'>Liquid input</div>
-          <div className='text-gray-600'>Liquid output</div>
-          <div className='text-gray-600'>Charts</div> */}
         </div>
       </div>
-
-      {/* <div className='bg-black'>s</div> */}
     </header>
   );
 };

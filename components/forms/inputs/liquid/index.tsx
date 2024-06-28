@@ -15,25 +15,64 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { toast } from '@/components/ui/use-toast';
+import { fluidInputForm } from '@/server/inputs/fuidInputAction';
+import { usePathname } from 'next/navigation';
 
-const formSchema = z.object({
-  fluid: z.number().min(2, {
-    message: 'enter you volume in ml.',
+const FormSchema = z.object({
+  fluid: z.string().min(1, {
+    message: 'Enter at least 1 digit.',
   }),
 });
 
 export function LiquidForm() {
-  // ...
+  const pathName = usePathname();
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const isOutPutPath = pathName.includes('output');
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
     defaultValues: {
-      fluid: 0,
+      fluid: '',
     },
   });
 
-  const onSubmit = () => {
-    console.log('pressed');
+  const handleCloseDrawer = () => {
+    window.history.pushState(null, '', `${pathName}`);
+  };
+  const onSubmit = async (formData: z.infer<typeof FormSchema>) => {
+    // Sets values based on path, either fluid_input or fluid_output
+    const result = await fluidInputForm({ formData, isOutPutPath });
+
+    if (result?.status === 200) {
+      const data = await fetch('https://icanhazdadjoke.com/', {
+        headers: {
+          Accept: 'application/json',
+          'User-Agent': 'MTS',
+        },
+      });
+
+      const result = await data.json();
+
+      toast({
+        title: 'Great! Fluid entry added.',
+        description: result?.joke ?? '',
+      });
+    }
+
+    handleCloseDrawer();
+
+    if (result?.status === 500) {
+      toast({
+        variant: 'destructive',
+        title: 'Obs! Something went wrong.',
+
+        description: 'Entry did not save. Please try again',
+      });
+      return;
+    }
+
+    form.reset();
   };
 
   return (
@@ -46,11 +85,17 @@ export function LiquidForm() {
             <FormItem>
               <FormLabel>Fluid amount</FormLabel>
               <FormControl>
-                <Input
-                  placeholder='enter fluid amount'
-                  type='number'
-                  {...field}
-                />
+                <div className='flex gap-2 items-end'>
+                  <Input
+                    className='max-w-[100px]'
+                    placeholder='Amount'
+                    type='number'
+                    {...field}
+                  />
+                  <div className='text-xl text-muted-foreground font-extralight'>
+                    ml
+                  </div>
+                </div>
               </FormControl>
               <FormDescription>Enter your fluid amount in ml.</FormDescription>
               <FormMessage />

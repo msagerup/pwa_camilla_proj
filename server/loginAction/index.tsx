@@ -6,8 +6,6 @@ export async function loginFormAction({ data }: { data: { pin: string } }) {
   const code = Number(CODE);
   const pinCode = Number(data.pin);
 
-  console.log(code, pinCode);
-
   if (code === pinCode) {
     console.log(33);
 
@@ -28,7 +26,4 @@ export async function loginFormAction({ data }: { data: { pin: string } }) {
     message: 'You entered the wrong code, please try again.',
   };
 
-  try {
-    console.log('hello', code, data);
-  } catch (error) {}
 }

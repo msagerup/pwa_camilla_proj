@@ -68,10 +68,10 @@ export function HeaderNav() {
                   </a>
                 </NavigationMenuLink>
               </li>
-              <ListItem href='/entry/input/liquid' title='Liquid input page'>
+              <ListItem href='/entry/input/liquid' title='Fluid input page'>
                 Enter you liquid intake per instance.
               </ListItem>
-              <ListItem href='/entry/output/liquid' title='Liquid output page'>
+              <ListItem href='/entry/output/liquid' title='Fluid output page'>
                 Enter your liquid output per instance.
               </ListItem>
               <ListItem href='/entry/input/protein' title='Protein input page'>
