@@ -23,9 +23,6 @@ const StatsCardTemplate = ({
 }: StatsCardTemplateProps) => {
   return (
     <div className='relative overflow-hidden transition-transform duration-300 ease-in-out rounded-lg shadow-lg group hover:shadow-xl hover:-translate-y-2'>
-      <Link href={link} className='absolute inset-0 z-10' prefetch={false}>
-        <span className='sr-only'>View</span>
-      </Link>
       <Image
         src={image}
         alt={altImageText}
@@ -37,7 +34,7 @@ const StatsCardTemplate = ({
         <h3 className='text-sm font-bold'>{header}</h3>
         <p className='text-sm text-muted-foreground pt-3'>{desc}</p>
 
-        <Link href='/charts/liquid' prefetch={false}>
+        <Link href={link} prefetch={false}>
           <Button
             size='sm'
             className='mt-4 w-full'

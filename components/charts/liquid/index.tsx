@@ -21,7 +21,7 @@ const LiquidPageOverview = () => {
               header='test'
               desc='hello'
               buttonText='dfsd'
-              link={''}
+              link='/charts/liquid/out_charts'
             />
 
             <StatsCardTemplate
@@ -31,7 +31,7 @@ const LiquidPageOverview = () => {
               header='tessssst'
               desc='hello'
               buttonText='dfsd'
-              link={''}
+              link='/charts/liquid/input'
             />
             <StatsCardTemplate
               image='/images/placeholder.svg'
