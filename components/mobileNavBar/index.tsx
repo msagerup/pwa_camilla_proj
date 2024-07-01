@@ -37,7 +37,7 @@ const MobileNavBar = () => {
         <VersionInfoCard>
           <div className='flex gap-1'>
             <div>FRT</div>
-            <div>v.0.1</div>
+            <div>v.0.2</div>
           </div>
         </VersionInfoCard>
 

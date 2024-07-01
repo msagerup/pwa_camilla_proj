@@ -12,10 +12,15 @@ export async function fluidInputForm({
   formData: { fluid: string };
   isOutPutPath: boolean;
 }) {
+  const dataEntry = {
+    amount: formData.fluid,
+    fluidType: isOutPutPath ? 'output' : 'input',
+  };
+
   try {
     const { data, error } = await supabase
       .from(isOutPutPath ? 'fluid_output' : 'fluid_input')
-      .insert([{ amount: formData.fluid }])
+      .insert([dataEntry])
       .select();
 
     console.log(data, error);

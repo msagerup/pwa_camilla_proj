@@ -5,6 +5,8 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+import Modal from '@/components/Modal';
+import { DeleteWarning } from '@/components/Modal/Alert';
 import {
   Table,
   TableBody,
@@ -120,11 +122,11 @@ export function DataTableFluidOut() {
                   {format(data.created_at, 'dd MMM')}{' '}
                   {format(data.created_at, 'HH:mm')}
                 </TableCell>
-                <TableCell>{data.type}</TableCell>
+                <TableCell>{data.fluidType}</TableCell>
                 <TableCell>{data.edited.toString()}</TableCell>
                 <TableCell className='text-right'>{data.amount}</TableCell>
                 <TableCell>
-                  <Action />
+                  <Action item={data} />
                 </TableCell>
               </TableRow>
             ))}
@@ -139,6 +141,8 @@ export function DataTableFluidOut() {
           </TableFooter>
         </Table>
       </ScrollArea>
+      <Modal modalType='edit' />
+      <DeleteWarning modalType='delete' />
     </>
   );
 }

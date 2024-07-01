@@ -5,6 +5,8 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+import Modal from '@/components/Modal';
+import { DeleteWarning } from '@/components/Modal/Alert';
 import {
   Table,
   TableBody,
@@ -103,43 +105,47 @@ export function DataTable() {
     <>
       <ContentHeader title='Fluid entries - input' subTitle='Editable' />
       <ScrollArea className='h-[200px] '>
-        <Table>
-          <TableCaption>Fluid input logs</TableCaption>
-          <TableHeader>
-            <TableRow>
-              <TableHead className='w-[100px]'>Date / time</TableHead>
-              <TableHead className='text-center'>Type</TableHead>
-              <TableHead>Edited</TableHead>
-              <TableHead className='text-right'>Amount</TableHead>
-              <TableHead className='text-right'></TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {fluidInputRecords?.map((data) => (
-              <TableRow key={data.id}>
-                <TableCell className='text-left'>
-                  {format(data.created_at, 'dd MMM')}{' '}
-                  {format(data.created_at, 'HH:mm')}
-                </TableCell>
-                <TableCell>{data.type}</TableCell>
-                <TableCell>{data.edited.toString()}</TableCell>
-                <TableCell className='text-right'>{data.amount}</TableCell>
-                <TableCell>
-                  <Action />
-                </TableCell>
+        <div className='pb-5'>
+          <Table>
+            <TableCaption>Fluid input logs</TableCaption>
+            <TableHeader>
+              <TableRow>
+                <TableHead className='w-[100px]'>Date / time</TableHead>
+                <TableHead className='text-center'>Type</TableHead>
+                <TableHead>Edited</TableHead>
+                <TableHead className='text-right'>Amount</TableHead>
+                <TableHead className='text-right'></TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-          <TableFooter>
-            <TableRow className=' bg-blue-200'>
-              <TableCell colSpan={4} className='text-left'>
-                Total
-              </TableCell>
-              <TableCell className='text-right'>{total}</TableCell>
-            </TableRow>
-          </TableFooter>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {fluidInputRecords?.map((data) => (
+                <TableRow key={data.id}>
+                  <TableCell className='text-left'>
+                    {format(data.created_at, 'dd MMM')}{' '}
+                    {format(data.created_at, 'HH:mm')}
+                  </TableCell>
+                  <TableCell>{data.fluidType}</TableCell>
+                  <TableCell>{data.edited.toString()}</TableCell>
+                  <TableCell className='text-right'>{data.amount}</TableCell>
+                  <TableCell>
+                    <Action item={data} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+            <TableFooter>
+              <TableRow className=' bg-blue-200'>
+                <TableCell colSpan={4} className='text-left'>
+                  Total
+                </TableCell>
+                <TableCell className='text-right'>{total}</TableCell>
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </div>
       </ScrollArea>
+      <Modal modalType='edit' />
+      <DeleteWarning modalType='delete' />
     </>
   );
 }

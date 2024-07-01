@@ -4,5 +4,11 @@ export type FluidRecord = {
   amount: number;
   updated_at: Date;
   edited: boolean;
-  type: string;
+  fluidType: string;
+};
+
+export type OpenDialogID = {
+  action: string;
+  section: string;
+  open: boolean;
 };

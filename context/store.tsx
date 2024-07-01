@@ -1,10 +1,10 @@
 'use client';
 
-import { FluidRecord } from '@/utils/types';
+import { FluidRecord, OpenDialogID } from '@/utils/types';
 import {
-  createContext,
   Dispatch,
   SetStateAction,
+  createContext,
   useContext,
   useState,
 } from 'react';
@@ -17,6 +17,10 @@ interface ContextProps {
   dropDownInfoId: string;
   fluidInputRecords: FluidRecord[];
   fluidOutputRecords: FluidRecord[];
+  openDialogId: OpenDialogID;
+  selectedFluidRecord: FluidRecord;
+  setSelectedFluidRecord: Dispatch<SetStateAction<FluidRecord>>;
+  setOpenDialogId: Dispatch<SetStateAction<OpenDialogID>>;
   setFluidOutputRecords: Dispatch<SetStateAction<FluidRecord[]>>;
   setFluidInputRecords: Dispatch<SetStateAction<FluidRecord[]>>;
   setDropDownInfoID: Dispatch<SetStateAction<string>>;
@@ -32,6 +36,10 @@ const defaultState: ContextProps = {
   dropDownInfoId: '',
   fluidInputRecords: [],
   fluidOutputRecords: [],
+  openDialogId: {} as OpenDialogID,
+  selectedFluidRecord: {} as FluidRecord,
+  setSelectedFluidRecord: () => {},
+  setOpenDialogId: () => '',
   setFluidOutputRecords: () => [],
   setFluidInputRecords: () => [],
   setDropDownInfoID: () => typeof String,
@@ -55,6 +63,12 @@ export default function GlobalContextProvider({
     []
   );
   const [fluidInputRecords, setFluidInputRecords] = useState<FluidRecord[]>([]);
+  const [openDialogId, setOpenDialogId] = useState<OpenDialogID>(
+    {} as OpenDialogID
+  );
+  const [selectedFluidRecord, setSelectedFluidRecord] = useState<FluidRecord>(
+    {} as FluidRecord
+  );
 
   return (
     <GlobalContext.Provider
@@ -65,6 +79,10 @@ export default function GlobalContextProvider({
         dropDownInfoId,
         fluidOutputRecords,
         fluidInputRecords,
+        openDialogId,
+        selectedFluidRecord,
+        setSelectedFluidRecord,
+        setOpenDialogId,
         setFluidInputRecords,
         setFluidOutputRecords,
         setDropDownInfoID,
