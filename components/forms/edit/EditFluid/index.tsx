@@ -66,18 +66,9 @@ export function EditLiquidForm({ record }: { record: FluidRecord }) {
     }
 
     if (result?.status === 200) {
-      const data = await fetch('https://icanhazdadjoke.com/', {
-        headers: {
-          Accept: 'application/json',
-          'User-Agent': 'MTS',
-        },
-      });
-
-      const result = await data.json();
-
       toast({
-        title: 'Ok! Fluid entry edited',
-        description: result?.joke ?? '',
+        title: 'Ok!',
+        description: 'Fluid entry edited',
       });
       setOpenDialogId({ action: '', section: '', open: false });
     }
