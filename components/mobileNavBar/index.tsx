@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { RightSideMenu } from '../RightSideMenu';
 import { VersionInfoCard } from '../VersionInfo';
 import { Separator } from '../ui/separator';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
@@ -12,12 +13,7 @@ const MobileNavBar = () => {
 
   if (pathName.includes('/login')) return null;
 
-  console.log(pathName);
-
   const isActive = pathName === '/';
-
-  console.log(isActive);
-
   return (
     <header className='w-full bg-background border-b fixed top-0 '>
       <div className='flex items-center justify-between h-12 pr-4 pl-2 md:px-6'>
@@ -31,7 +27,9 @@ const MobileNavBar = () => {
             Fluid Restriction tracker
           </span>
         </Link>
-        <div>=</div>
+        <div>
+          <RightSideMenu />
+        </div>
       </div>
       <div className='flex items-center pl-4 h-8 bg-gray-400'>
         <VersionInfoCard>
