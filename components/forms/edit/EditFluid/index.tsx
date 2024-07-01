@@ -34,8 +34,6 @@ const FormSchema = z.object({
 export function EditLiquidForm({ record }: { record: FluidRecord }) {
   const { selectedFluidRecord, setOpenDialogId } = useGlobalContext();
 
-  console.log(selectedFluidRecord);
-
   const pathName = usePathname();
 
   const isOutPutPath = pathName.includes('output');
@@ -78,7 +76,7 @@ export function EditLiquidForm({ record }: { record: FluidRecord }) {
       const result = await data.json();
 
       toast({
-        title: 'Great! Fluid entry added.',
+        title: 'Ok! Fluid entry edited',
         description: result?.joke ?? '',
       });
       setOpenDialogId({ action: '', section: '', open: false });
