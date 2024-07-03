@@ -1,4 +1,62 @@
-const index = () => {
+'use client';
+
+import { getAllTables } from '@/utils/helpers/supabaseQuerys';
+import { FluidRecord } from '@/utils/types';
+import { useEffect, useState } from 'react';
+
+const CircleBar = () => {
+  const [circlePercentage, setCirclePercentage] = useState<number>(0);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        let liqInput = [] as FluidRecord[];
+        let lioOutput = [] as FluidRecord[];
+
+        await Promise.all([
+          (await getAllTables({ tableName: 'fluid_input' })).data,
+          (await getAllTables({ tableName: 'fluid_output' })).data,
+        ]).then((values) => {
+          values.forEach((records) => {
+            records.forEach((record) => {
+              if (record.fluidType === 'input') {
+                liqInput.push(record);
+              } else {
+                lioOutput.push(record);
+              }
+            });
+          });
+        });
+
+        const totalInputPutMl = liqInput.reduce((prev, current) => {
+          return prev + current.amount;
+        }, 0);
+
+        let totalOutPutMl = lioOutput.reduce((prev, current) => {
+          return prev + current.amount;
+        }, 0);
+
+        console.log(totalInputPutMl);
+        console.log(totalOutPutMl);
+
+        // Stop from calculating infante if output = 0
+        if (totalOutPutMl === 0) {
+          totalOutPutMl = 1;
+        }
+
+        const percentage = (totalInputPutMl / totalOutPutMl) * 100;
+
+        setCirclePercentage(Math.trunc(percentage));
+      } catch (error) {
+        console.error('Something went wrong, Circlebar comp.', error);
+      }
+    }
+    fetchData();
+    // return () => {
+    //   second
+    // }
+  }, []); // Or [] if effect doesn't need props or state
+
   return (
     <div className=''>
       <div className='circle-container'>
@@ -11,7 +69,8 @@ const index = () => {
           <h2>Today</h2>
           <p>
             <b>
-              0<span>%</span>
+              {circlePercentage}
+              <span>%</span>
             </b>
           </p>
         </div>
@@ -50,4 +109,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default CircleBar;

@@ -6,7 +6,7 @@ export function MenuToggler() {
   return (
     <ToggleGroup type='single' size='lg'>
       <ToggleGroupItem value='settings' aria-label='Toggle settings'>
-        <SettingsIcon className='h-10 w-10' />
+        <SettingsIcon className='h-10 w-10 du' />
       </ToggleGroupItem>
       <ToggleGroupItem value='account' aria-label='Toggle account'>
         <AccountBoxIcon className='h-4 w-4' />

@@ -18,6 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useGlobalContext } from '@/context/store';
+import { getAllTables } from '@/utils/helpers/supabaseQuerys';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import ContentHeader from '../../headers/contentHeader';
@@ -41,7 +42,7 @@ export function DataTable() {
 
   // Fetch initial data
   const fetchAllRecords = async () => {
-    const { data, error } = await supabase.from('fluid_input').select('*');
+    const { data, error } = await getAllTables({ tableName: 'fluid_input' });
 
     if (error) {
       console.error('Error fetching records:', error);
@@ -92,10 +93,10 @@ export function DataTable() {
   };
 
   useEffect(() => {
+    // console.log('hello');
     fetchAllRecords();
     subscribeToChanges();
-
-    // Clean up the subscription on unmount
+    // // // Clean up the subscription on unmount
     // return () => {
     //   supabase.removeAllChannels();
     // };
@@ -118,20 +119,28 @@ export function DataTable() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {fluidInputRecords?.map((data) => (
-                <TableRow key={data.id}>
-                  <TableCell className='text-left'>
-                    {format(data.created_at, 'dd MMM')}{' '}
-                    {format(data.created_at, 'HH:mm')}
-                  </TableCell>
-                  <TableCell>{data.fluidType}</TableCell>
-                  <TableCell>{data.edited.toString()}</TableCell>
-                  <TableCell className='text-right'>{data.amount}</TableCell>
-                  <TableCell>
-                    <Action item={data} />
-                  </TableCell>
-                </TableRow>
-              ))}
+              {fluidInputRecords
+                ?.sort((a, b) => {
+                  const dateA = new Date(a.created_at);
+                  const dateB = new Date(b.created_at);
+
+                  // Compare the dates
+                  return dateB - dateA;
+                })
+                .map((data) => (
+                  <TableRow key={data.id}>
+                    <TableCell className='text-left'>
+                      {format(data.created_at, 'dd MMM')}{' '}
+                      {format(data.created_at, 'HH:mm')}
+                    </TableCell>
+                    <TableCell>{data.fluidType}</TableCell>
+                    <TableCell>{data.edited.toString()}</TableCell>
+                    <TableCell className='text-right'>{data.amount}</TableCell>
+                    <TableCell>
+                      <Action item={data} />
+                    </TableCell>
+                  </TableRow>
+                ))}
             </TableBody>
             <TableFooter>
               <TableRow className=' bg-blue-200'>

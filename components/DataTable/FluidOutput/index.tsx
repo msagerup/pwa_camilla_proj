@@ -18,6 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useGlobalContext } from '@/context/store';
+import { getAllTables } from '@/utils/helpers/supabaseQuerys';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import ContentHeader from '../../headers/contentHeader';
@@ -25,28 +26,29 @@ import { ScrollArea } from '../../ui/scroll-area';
 import Action from './components/Action';
 
 export function DataTableFluidOut() {
-  const { fluidInputRecords, setFluidInputRecords } = useGlobalContext();
+  const { fluidOutputRecords, setFluidOutputRecords } = useGlobalContext();
   const [total, setTotal] = useState<number>(0);
-
   useEffect(() => {
     const calcTotal = () => {
       let total = 0;
-      fluidInputRecords.forEach((item) => {
+      fluidOutputRecords.forEach((item) => {
         total += item.amount;
       });
       setTotal(total);
     };
     calcTotal();
-  }, [fluidInputRecords]);
+  }, [fluidOutputRecords]);
 
   // Fetch initial data
   const fetchAllRecords = async () => {
-    const { data, error } = await supabase.from('fluid_output').select('*');
+    const { data, error } = await getAllTables({ tableName: 'fluid_output' });
+
+    console.log(data, error);
 
     if (error) {
       console.error('Error fetching records:', error);
     } else {
-      setFluidInputRecords(data);
+      setFluidOutputRecords(data);
     }
   };
 
@@ -65,20 +67,20 @@ export function DataTableFluidOut() {
           // Handle the real-time payload
           switch (payload.eventType) {
             case 'INSERT':
-              setFluidInputRecords((prevRecords) => [
+              setFluidOutputRecords((prevRecords) => [
                 ...prevRecords,
                 payload.new,
               ]);
               break;
             case 'UPDATE':
-              setFluidInputRecords((prevRecords) =>
+              setFluidOutputRecords((prevRecords) =>
                 prevRecords.map((record) =>
                   record.id === payload.new.id ? payload.new : record
                 )
               );
               break;
             case 'DELETE':
-              setFluidInputRecords((prevRecords) =>
+              setFluidOutputRecords((prevRecords) =>
                 prevRecords.filter((record) => record.id !== payload.old.id)
               );
               break;
@@ -116,20 +118,28 @@ export function DataTableFluidOut() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {fluidInputRecords?.map((data) => (
-              <TableRow key={data.id}>
-                <TableCell className='text-left'>
-                  {format(data.created_at, 'dd MMM')}{' '}
-                  {format(data.created_at, 'HH:mm')}
-                </TableCell>
-                <TableCell>{data.fluidType}</TableCell>
-                <TableCell>{data.edited.toString()}</TableCell>
-                <TableCell className='text-right'>{data.amount}</TableCell>
-                <TableCell>
-                  <Action item={data} />
-                </TableCell>
-              </TableRow>
-            ))}
+            {fluidOutputRecords
+              ?.sort((a, b) => {
+                const dateA = new Date(a.created_at);
+                const dateB = new Date(b.created_at);
+
+                // Compare the dates
+                return dateB - dateA;
+              })
+              .map((data) => (
+                <TableRow key={data.id}>
+                  <TableCell className='text-left'>
+                    {format(data.created_at, 'dd MMM')}{' '}
+                    {format(data.created_at, 'HH:mm')}
+                  </TableCell>
+                  <TableCell>{data.fluidType}</TableCell>
+                  <TableCell>{data.edited.toString()}</TableCell>
+                  <TableCell className='text-right'>{data.amount}</TableCell>
+                  <TableCell>
+                    <Action item={data} />
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
           <TableFooter>
             <TableRow className=' bg-blue-200'>
