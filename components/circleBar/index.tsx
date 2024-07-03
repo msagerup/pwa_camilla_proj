@@ -44,7 +44,11 @@ const CircleBar = () => {
           totalOutPutMl = 1;
         }
 
+        // Change css style
         const percentage = (totalInputPutMl / totalOutPutMl) * 100;
+
+        const root = document.documentElement;
+        // root.style.setProperty('--wave-position', '110%');
 
         setCirclePercentage(Math.trunc(percentage));
       } catch (error) {

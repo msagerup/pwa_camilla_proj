@@ -11,11 +11,17 @@
   --ease-out: cubic-bezier(0, 0, 0.42, 0.58);
   --wave-position: 110%;
   --clip-position: 110%;
+  --wave-position:  5%;
+  --wave-fillPosition: 14%;
 }
 
-body {
-  background-color: #e9f5fe;
+/*
+ * LAYOUT
+ */
 
+body {
+  background-color: #e0f1fd;
+  /* color: #3b46d3; */
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
 }
@@ -35,12 +41,28 @@ main {
   align-items: center;
 }
 
-h1 {
-  margin-bottom: 0;
-  text-align: center;
+
+
+/*
+ * FONT SIZE
+ */
+
+h1,
+.desc p {
+  font-size: 3.5em;
 }
 
+.desc h2 {
+  font-size: 1.5em;
+}
 
+.desc span {
+  font-size: 0.5em;
+}
+
+.desc * {
+  margin: 0;
+}
 
 /*
  * MAKE CIRCLE
@@ -50,17 +72,15 @@ h1 {
   position: relative;
   width: 300px;
   height: 300px;
-  margin-left: 20px;
-  z-index: -1;
-  /* margin: 2em; */
+  margin: 2em;
 }
 
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   .circle-container {
     width: 300px;
     height: 300px;
   }
-} */
+}
 
 .circle-container > * {
   position: absolute;
@@ -95,10 +115,10 @@ h1 {
  */
 
 .wave._0 {
-  background-position: 0% 110%;
+  background-position: 0%  var(--wave-position);
 }
 .wave-below._0 {
-  clip-path: polygon(0% 110%, 0% 110%, 110% 110%, 110% 110%);
+  clip-path: polygon(0% 110%, 0% var(--wave-fillPosition), 110% var(--wave-fillPosition), 110% 110%);
 }
 
 .wave._50 {
@@ -137,7 +157,7 @@ h1 {
 
 @keyframes wave-0 {
   to {
-    background-position: 1200px 110%;
+    background-position: 1200px var(--wave-position);
   }
 }
 
@@ -157,7 +177,10 @@ h1 {
  * GIVE FILLING & WAVE ANIMATION
  */
 
-
+:root {
+  --ease-in: cubic-bezier(0.58, 0.42, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.42, 0.58);
+}
 
 .wave {
   animation-name: fill-wave, wave-0;
@@ -217,6 +240,7 @@ h1 {
 .desc._100 {
   color: white;
 }
+
 
 
   @layer base {
