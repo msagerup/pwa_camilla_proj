@@ -11,8 +11,10 @@
   --ease-out: cubic-bezier(0, 0, 0.42, 0.58);
   --wave-position: 110%;
   --clip-position: 110%;
-  --wave-position:  5%;
-  --wave-fillPosition: 14%;
+  --wave-position: 110%;
+  --wave-fillPosition: 114%;
+  --circle-todayText: #3d3d3d;
+  --circle-todayPercentage:  #3d3d3d;
 }
 
 /*
@@ -48,9 +50,9 @@ main {
  */
 
 h1,
-.desc p {
+/* .desc p {
   font-size: 3.5em;
-}
+} */
 
 .desc h2 {
   font-size: 1.5em;
@@ -161,18 +163,6 @@ h1,
   }
 }
 
-@keyframes wave-50 {
-  to {
-    background-position: 1200px 57%;
-  }
-}
-
-@keyframes wave-100 {
-  to {
-    background-position: 1200px 5%;
-  }
-}
-
 /*
  * GIVE FILLING & WAVE ANIMATION
  */
@@ -230,11 +220,12 @@ h1,
 }
 
 .desc * {
-  animation: 1s 6s both rise-up;
+  animation: 1s 3s both rise-up;
+  color: var(--circle-todayText)
 }
 
-.desc._50 p {
-  color: white;
+.desc p {
+  color:  var(--circle-todayPercentage)
 }
 
 .desc._100 {

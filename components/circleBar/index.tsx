@@ -4,6 +4,49 @@ import { getAllTables } from '@/utils/helpers/supabaseQuerys';
 import { FluidRecord } from '@/utils/types';
 import { useEffect, useState } from 'react';
 
+
+// const WaveAnimation = () => {
+//   const [percentage, setPercentage] = useState(0);
+
+//   const handleInputChange = (e) => {
+//     const value = e.target.value;
+//     setPercentage(value);
+
+//     const wavePosition = 105 - value;
+//     let clipPosition = 105 - value * 1.1;
+
+//     if (value > 45) {
+//       clipPosition = 105 - value + 5.2;
+//     }
+
+//     console.log(clipPosition, wavePosition);
+
+//     // Dynamically set inline styles
+//     const root = document.documentElement;
+//     root.style.setProperty('--wave-position', `${wavePosition}%`);
+//     root.style.setProperty('--wave-fillPosition', `${clipPosition}%`);
+//     // root.style.setProperty('--circle-todayText', 'white');
+
+//     if (value > 50) {
+//       root.style.setProperty('--circle-todayText', 'blue');
+//       root.style.setProperty('--circle-todayPercentage', 'white');
+//     }
+//   };
+
+//   return (
+//     <div className='container'>
+//       <input
+//         type='range'
+//         min='0'
+//         max='100'
+//         value={percentage}
+//         onChange={handleInputChange}
+//         className='slider'
+//       />
+//     </div>
+//   );
+// };
+
 const CircleBar = () => {
   const [circlePercentage, setCirclePercentage] = useState<number>(0);
 
@@ -44,71 +87,50 @@ const CircleBar = () => {
           totalOutPutMl = 1;
         }
 
-        // Change css style
-        const percentage = (totalInputPutMl / totalOutPutMl) * 100;
+        // Change css style section
+        const percentage = Math.trunc((totalInputPutMl / totalOutPutMl) * 100);
 
+        const wavePosition = 105 - percentage;
+        let clipPosition = 105 - percentage * 1.1;
+
+        if (percentage > 45) {
+          clipPosition = 105 - percentage + 5.2;
+        }
+
+        // Dynamically set inline styles
         const root = document.documentElement;
-        // root.style.setProperty('--wave-position', '110%');
 
-        setCirclePercentage(Math.trunc(percentage));
+        root.style.setProperty('--wave-position', `${wavePosition}%`);
+        root.style.setProperty('--wave-fillPosition', `${clipPosition}%`);
+
+        setCirclePercentage(percentage);
       } catch (error) {
         console.error('Something went wrong, Circlebar comp.', error);
       }
     }
     fetchData();
-    // return () => {
-    //   second
-    // }
-  }, []); // Or [] if effect doesn't need props or state
+  }, []);
 
   return (
     <div className=''>
+      {/* <WaveAnimation /> */}
       <div className='circle-container'>
         <div className='circle'></div>
         <div className='wave _0'></div>
         <div className='wave _0'></div>
         <div className='wave _0'></div>
         <div className='wave-below _0'></div>
-        <div className='desc _0'>
+        <div className='desc flex items-center'>
           <h2>Today</h2>
           <p>
-            <b>
+            <b className='text-4xl'>
               {circlePercentage}
+
               <span>%</span>
             </b>
           </p>
         </div>
       </div>
-      {/* <div className='circle-container'>
-        <div className='circle'></div>
-        <div className='wave _50'></div>
-        <div className='wave _50'></div>
-        <div className='wave _50'></div>
-        <div className='wave-below _50'></div>
-        <div className='desc _50'>
-          <h2>Today</h2>
-          <p>
-            <b>
-              50<span>%</span>
-            </b>
-          </p>
-        </div>
-      </div> */}
-      {/* <div className='circle-container'>
-        <div className='circle'></div>
-        <div className='wave _100'></div>
-        <div className='wave _100'></div>
-        <div className='wave _100'></div>
-        <div className='wave-below _100'></div>
-        <div className='desc _100'>
-          <h2>Today</h2>
-          <p>
-            <b>
-              100<span>%</span>
-            </b>
-          </p>
-        </div>
-      </div> */}
     </div>
   );
 };
