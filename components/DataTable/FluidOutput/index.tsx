@@ -124,6 +124,7 @@ export function DataTableFluidOut() {
                 const dateB = new Date(b.created_at);
 
                 // Compare the dates
+                // @ts-ignore
                 return dateB - dateA;
               })
               .map((data) => (
