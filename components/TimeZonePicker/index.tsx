@@ -34,7 +34,7 @@ export function TimeZonePickerCard({
   return (
     <HoverCard open={isOpen}>
       <HoverCardTrigger asChild>
-        <div className='cursor-pointer' onClick={handleOpen}>
+        <div className='cursor-pointer text-sm ml-1' onClick={handleOpen}>
           {children}
         </div>
       </HoverCardTrigger>

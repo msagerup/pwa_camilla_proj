@@ -33,6 +33,18 @@ export function VersionInfoCard({ children }: { children: React.ReactNode }) {
             <div className='space-y-1'>
               <h4 className='text-sm font-semibold'>@FRT</h4>
               <p className='text-sm'>
+                v.0.3 - Real time change on data. - First testing in progress.
+              </p>
+              <div className='flex items-center pt-2'>
+                <CalendarIcon className='mr-2 h-4 w-4 opacity-70' />{' '}
+                <span className='text-xs text-muted-foreground'>
+                  Wed 05 July - 2024
+                </span>
+              </div>
+            </div>
+            <div className='space-y-1'>
+              <h4 className='text-sm font-semibold'>@FRT</h4>
+              <p className='text-sm'>
                 v.0.2 - Edit, delete implemented. Graph render implemented.
               </p>
               <div className='flex items-center pt-2'>

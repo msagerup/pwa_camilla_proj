@@ -33,9 +33,9 @@ const MobileNavBar = () => {
       </div>
       <div className='flex items-center pl-4 h-8 bg-gray-400'>
         <VersionInfoCard>
-          <div className='flex gap-1'>
+          <div className='flex gap-1 text-sm'>
             <div>FRT</div>
-            <div>v.0.2</div>
+            <div>v.0.3</div>
           </div>
         </VersionInfoCard>
 
