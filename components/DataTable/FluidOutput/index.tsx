@@ -43,8 +43,6 @@ export function DataTableFluidOut() {
   const fetchAllRecords = async () => {
     const { data, error } = await getAllTables({ tableName: 'fluid_output' });
 
-    console.log(data, error);
-
     if (error) {
       console.error('Error fetching records:', error);
     } else {

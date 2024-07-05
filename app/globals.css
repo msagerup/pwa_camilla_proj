@@ -71,10 +71,13 @@ h1,
  */
 
 .circle-container {
-  position: relative;
+  /* position: relative; */
   width: 300px;
   height: 300px;
-  margin: 2em;
+  /* margin: 2em; */
+  position: fixed;
+  left: 50%;
+transform: translate(-46%);
 }
 
 @media (max-width: 768px) {

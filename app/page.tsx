@@ -7,7 +7,7 @@ export default function Home() {
       <div className='pt-2 flex justify-center items-center mt-[120px] mb-10'>
         <CircleBar />
       </div>
-      <div className='pb-5'>
+      <div className='pt-[280px]'>
         <DataTable />
       </div>
     </div>
