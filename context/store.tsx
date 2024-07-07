@@ -19,6 +19,8 @@ interface ContextProps {
   fluidOutputRecords: FluidRecord[];
   openDialogId: OpenDialogID;
   selectedFluidRecord: FluidRecord;
+  rightMenuSection: string;
+  setRightMenuSection: Dispatch<SetStateAction<string>>;
   setSelectedFluidRecord: Dispatch<SetStateAction<FluidRecord>>;
   setOpenDialogId: Dispatch<SetStateAction<OpenDialogID>>;
   setFluidOutputRecords: Dispatch<SetStateAction<FluidRecord[]>>;
@@ -38,6 +40,8 @@ const defaultState: ContextProps = {
   fluidOutputRecords: [],
   openDialogId: {} as OpenDialogID,
   selectedFluidRecord: {} as FluidRecord,
+  rightMenuSection: 'context',
+  setRightMenuSection: () => null,
   setSelectedFluidRecord: () => {},
   setOpenDialogId: () => '',
   setFluidOutputRecords: () => [],
@@ -70,6 +74,8 @@ export default function GlobalContextProvider({
     {} as FluidRecord
   );
 
+  const [rightMenuSection, setRightMenuSection] = useState<string>('context');
+
   return (
     <GlobalContext.Provider
       value={{
@@ -81,6 +87,8 @@ export default function GlobalContextProvider({
         fluidInputRecords,
         openDialogId,
         selectedFluidRecord,
+        rightMenuSection,
+        setRightMenuSection,
         setSelectedFluidRecord,
         setOpenDialogId,
         setFluidInputRecords,

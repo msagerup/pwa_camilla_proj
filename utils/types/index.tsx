@@ -12,3 +12,9 @@ export type OpenDialogID = {
   section: string;
   open: boolean;
 };
+
+
+export type MenuSection = {
+  menuSection: string;
+  data: { subName: string; links: string[] }[];
+};

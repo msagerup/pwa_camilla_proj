@@ -6,7 +6,7 @@ import { toZonedTime } from 'date-fns-tz';
 const TimeDisplay = () => {
   const { timeZone } = useGlobalContext();
 
-  console.log(timeZone);
+
 
   return (
     <TimeZonePickerCard>

@@ -75,12 +75,17 @@ const config = {
           '0%': { transform: 'translateX(100%) translateY(-50px)' },
           '100%': { transform: 'translateX(0) translateY(-50px)' },
         },
+        slideInFromRightIcon: {
+          '0%': { transform: 'translateX(100%) ' },
+          '100%': { transform: 'translateX(0)' },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
         'slide-in-right': 'slideInFromRight 0.5s ease-in-out forwards',
+        'slide-in-right-icon': 'slideInFromRightIcon 0.9s ease-in-out forwards',
       },
     },
   },
