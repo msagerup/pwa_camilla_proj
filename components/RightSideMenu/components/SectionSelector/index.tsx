@@ -7,7 +7,6 @@ const getMenuSection = (value: string) => {
   switch (value) {
     case 'context':
       return <Nav />;
-
     case 'account':
       return <Profile />;
     case 'settings':

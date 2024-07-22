@@ -5,64 +5,31 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-import { getAllTables } from '@/utils/helpers/supabaseQuerys';
+import { useGlobalContext } from '@/context/store';
+import { getTablesFromDate } from '@/utils/helpers/supabaseQuerys';
 import { FluidRecord } from '@/utils/types';
 import { useEffect, useState } from 'react';
-
-// const WaveAnimation = () => {
-//   const [percentage, setPercentage] = useState(0);
-
-//   const handleInputChange = (e) => {
-//     const value = e.target.value;
-//     setPercentage(value);
-
-//     const wavePosition = 105 - value;
-//     let clipPosition = 105 - value * 1.1;
-
-//     if (value > 45) {
-//       clipPosition = 105 - value + 5.2;
-//     }
-
-//     console.log(clipPosition, wavePosition);
-
-//     // Dynamically set inline styles
-//     const root = document.documentElement;
-//     root.style.setProperty('--wave-position', `${wavePosition}%`);
-//     root.style.setProperty('--wave-fillPosition', `${clipPosition}%`);
-//     // root.style.setProperty('--circle-todayText', 'white');
-
-//     if (value > 50) {
-//       root.style.setProperty('--circle-todayText', 'blue');
-//       root.style.setProperty('--circle-todayPercentage', 'white');
-//     }
-//   };
-
-//   return (
-//     <div className='container'>
-//       <input
-//         type='range'
-//         min='0'
-//         max='100'
-//         value={percentage}
-//         onChange={handleInputChange}
-//         className='slider'
-//       />
-//     </div>
-//   );
-// };
 
 const CircleBar = () => {
   const [circlePercentage, setCirclePercentage] = useState<number>(0);
   const [fluidInput, setFluidInput] = useState<FluidRecord[]>([]);
   const [fluidOutput, setFluidOutput] = useState<FluidRecord[]>([]);
 
+  const { activeDate } = useGlobalContext();
+
   // Fetch initial data
   const fetchAllRecords = async (type: string) => {
     if (type === 'input') {
-      const { data, error } = await getAllTables({ tableName: 'fluid_input' });
+      const { data, error } = await getTablesFromDate({
+        tableName: 'fluid_input',
+        activeDate,
+      });
       setFluidInput(data);
     } else {
-      const { data, error } = await getAllTables({ tableName: 'fluid_output' });
+      const { data, error } = await getTablesFromDate({
+        tableName: 'fluid_output',
+        activeDate,
+      });
       setFluidOutput(data);
     }
   };
@@ -150,11 +117,11 @@ const CircleBar = () => {
   }, []);
 
   useEffect(() => {
-    const totalInputPutMl = fluidInput.reduce((prev, current) => {
+    const totalInputPutMl = fluidInput?.reduce((prev, current) => {
       return prev + current.amount;
     }, 0);
 
-    let totalOutPutMl = fluidOutput.reduce((prev, current) => {
+    let totalOutPutMl = fluidOutput?.reduce((prev, current) => {
       return prev + current.amount;
     }, 0);
 
@@ -181,65 +148,6 @@ const CircleBar = () => {
 
     setCirclePercentage(percentage);
   }, [fluidInput, fluidOutput]);
-
-  // useEffect(() => {
-  //   async function fetchData() {
-  //     try {
-  //       let liqInput = [] as FluidRecord[];
-  //       let lioOutput = [] as FluidRecord[];
-
-  //       await Promise.all([
-  //         (await getAllTables({ tableName: 'fluid_input' })).data,
-  //         (await getAllTables({ tableName: 'fluid_output' })).data,
-  //       ]).then((values) => {
-  //         values.forEach((records) => {
-  //           records.forEach((record) => {
-  //             if (record.fluidType === 'input') {
-  //               setFluidInput()
-  //               liqInput.push(record);
-  //             } else {
-  //               lioOutput.push(record);
-  //             }
-  //           });
-  //         });
-  //       });
-
-  //       const totalInputPutMl = liqInput.reduce((prev, current) => {
-  //         return prev + current.amount;
-  //       }, 0);
-
-  //       let totalOutPutMl = lioOutput.reduce((prev, current) => {
-  //         return prev + current.amount;
-  //       }, 0);
-
-  //       // Stop from calculating infante if output = 0
-  //       if (totalOutPutMl === 0) {
-  //         totalOutPutMl = 1;
-  //       }
-
-  //       // Change css style section
-  //       const percentage = Math.trunc((totalInputPutMl / totalOutPutMl) * 100);
-
-  //       const wavePosition = 105 - percentage;
-  //       let clipPosition = 105 - percentage * 1.1;
-
-  //       if (percentage > 45) {
-  //         clipPosition = 105 - percentage + 5.2;
-  //       }
-
-  //       // Dynamically set inline styles
-  //       const root = document.documentElement;
-
-  //       root.style.setProperty('--wave-position', `${wavePosition}%`);
-  //       root.style.setProperty('--wave-fillPosition', `${clipPosition}%`);
-
-  //       setCirclePercentage(percentage);
-  //     } catch (error) {
-  //       console.error('Something went wrong, Circlebar comp.', error);
-  //     }
-  //   }
-  //   fetchData();
-  // }, []);
 
   return (
     <div className=''>

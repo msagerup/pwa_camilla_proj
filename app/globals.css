@@ -76,13 +76,13 @@ h1,
   position: fixed;
   left: 50%;
   z-index: -1;
-transform: translate(-46%);
+transform: translate(-47%);
 }
 
 @media (max-width: 768px) {
   .circle-container {
-    width: 300px;
-    height: 300px;
+    width: 290px;
+    height: 290px;
   }
 }
 

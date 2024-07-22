@@ -18,7 +18,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { useGlobalContext } from '@/context/store';
-import { getAllTables } from '@/utils/helpers/supabaseQuerys';
+import { getTablesFromDate } from '@/utils/helpers/supabaseQuerys';
 import { format } from 'date-fns';
 import { useEffect, useState } from 'react';
 import ContentHeader from '../../headers/contentHeader';
@@ -27,7 +27,8 @@ import Action from './components/Action';
 
 export function DataTable() {
   const [total, setTotal] = useState<number>(0);
-  const { fluidInputRecords, setFluidInputRecords } = useGlobalContext();
+  const { fluidInputRecords, setFluidInputRecords, activeDate } =
+    useGlobalContext();
 
   useEffect(() => {
     const calcTotal = () => {
@@ -42,7 +43,10 @@ export function DataTable() {
 
   // Fetch initial data
   const fetchAllRecords = async () => {
-    const { data, error } = await getAllTables({ tableName: 'fluid_input' });
+    const { data, error } = await getTablesFromDate({
+      tableName: 'fluid_input',
+      activeDate,
+    });
 
     if (error) {
       console.error('Error fetching records:', error);

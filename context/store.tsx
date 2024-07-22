@@ -20,6 +20,8 @@ interface ContextProps {
   openDialogId: OpenDialogID;
   selectedFluidRecord: FluidRecord;
   rightMenuSection: string;
+  activeDate: string;
+  setActiveDate: Dispatch<SetStateAction<string>>;
   setRightMenuSection: Dispatch<SetStateAction<string>>;
   setSelectedFluidRecord: Dispatch<SetStateAction<FluidRecord>>;
   setOpenDialogId: Dispatch<SetStateAction<OpenDialogID>>;
@@ -41,6 +43,8 @@ const defaultState: ContextProps = {
   openDialogId: {} as OpenDialogID,
   selectedFluidRecord: {} as FluidRecord,
   rightMenuSection: 'context',
+  activeDate: new Date().toISOString().split('T')[0],
+  setActiveDate: () => null,
   setRightMenuSection: () => null,
   setSelectedFluidRecord: () => {},
   setOpenDialogId: () => '',
@@ -76,6 +80,9 @@ export default function GlobalContextProvider({
 
   const [rightMenuSection, setRightMenuSection] = useState<string>('context');
 
+  const [activeDate, setActiveDate] = useState<string>(
+    new Date().toISOString().split('T')[0]
+  );
   return (
     <GlobalContext.Provider
       value={{
@@ -88,6 +95,8 @@ export default function GlobalContextProvider({
         openDialogId,
         selectedFluidRecord,
         rightMenuSection,
+        activeDate,
+        setActiveDate,
         setRightMenuSection,
         setSelectedFluidRecord,
         setOpenDialogId,

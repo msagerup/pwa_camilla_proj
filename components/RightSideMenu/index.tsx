@@ -5,6 +5,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
 import SectionHeaderSelector from './components/SectionHeaderSelector';
 import SectionSelector from './components/SectionSelector';
 import { MenuToggler } from './components/menuToggler';
@@ -13,7 +14,9 @@ export function RightSideMenu() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant='outline'>Open</Button>
+        <Button variant='ghost' size='icon'>
+          <Menu className='h-5 w-5' />
+        </Button>
       </SheetTrigger>
       <SheetContent className='p-0'>
         {' '}

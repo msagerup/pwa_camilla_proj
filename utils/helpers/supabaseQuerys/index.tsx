@@ -9,7 +9,24 @@ export const getAllTables = async ({ tableName }: { tableName: string }) => {
   const { data, error } = await supabase
     .from(tableName)
     .select('*')
-    .order('created_at', { ascending: false }); // S
+    .order('created_at', { ascending: false });
+
+  return { data: data as FluidRecord[], error };
+};
+
+export const getTablesFromDate = async ({
+  tableName,
+  activeDate,
+}: {
+  tableName: string;
+  activeDate: string;
+}) => {
+  const { data, error } = await supabase
+    .from(tableName)
+    .select('*')
+    .gte('created_at', `${activeDate}T00:00:00.000Z`)
+    .lt('created_at', `${activeDate}T23:59:59.999Z`)
+    .order('created_at', { ascending: false });
 
   return { data: data as FluidRecord[], error };
 };

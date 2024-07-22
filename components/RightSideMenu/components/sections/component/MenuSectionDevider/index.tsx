@@ -23,7 +23,7 @@ const renderMenu = (menu: MenuSection[], menuSection: any) => {
                   className=' bg-gray-400 h-full'
                 />
               </div>
-              <div className='flex-grow text-right text-xl gap-3 underline uppercase flex flex-col'>
+              <div className='flex-grow text-right text-md gap-3 underline uppercase flex flex-col'>
                 {item.links.map((link, index) => {
                   return <div key={index}>{link}</div>;
                 })}
@@ -39,20 +39,7 @@ const renderMenu = (menu: MenuSection[], menuSection: any) => {
 const MenuSectionDivider = ({ menu }: { menu: any }) => {
   const { rightMenuSection } = useGlobalContext();
 
-  console.log(rightMenuSection);
-  console.log(menu);
-
-  return (
-    <div>
-      {renderMenu(menu, rightMenuSection)}
-      <div>
-        {/* <div className='space-y-1'>
-          <h4 className='text-sm font-medium leading-none'>Sections</h4>
-          <p className='text-sm text-muted-foreground'>Main</p>
-        </div> */}
-      </div>
-    </div>
-  );
+  return <>{renderMenu(menu, rightMenuSection)}</>;
 };
 
 export default MenuSectionDivider;

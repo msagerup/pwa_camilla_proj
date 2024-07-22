@@ -6,7 +6,6 @@ import { RightSideMenu } from '../RightSideMenu';
 import { VersionInfoCard } from '../VersionInfo';
 import { Separator } from '../ui/separator';
 import { Tabs, TabsList, TabsTrigger } from '../ui/tabs';
-import TimeDisplay from './components/TimeDisplay';
 const MobileNavBar = () => {
   const pathName = usePathname();
   const router = useRouter();
@@ -31,17 +30,17 @@ const MobileNavBar = () => {
           <RightSideMenu />
         </div>
       </div>
-      <div className='flex items-center pl-4 h-8 bg-gray-400'>
+      <div className='flex items-center pl-4 h-8  bg-gray-400'>
         <VersionInfoCard>
           <div className='flex gap-1 text-sm'>
             <div>FRT</div>
-            <div>v.0.3</div>
+            <div>v.0.4</div>
           </div>
         </VersionInfoCard>
 
-        <div className='bg-black w-[2px] h-[70%] mx-2' />
+        <div className='bg-black w-[1px] h-[70%] mx-2' />
 
-        <TimeDisplay />
+        {/* <TimeDisplay /> */}
 
         <div className='flex gap-5 w-full justify-end'>
           <Tabs>
@@ -70,7 +69,6 @@ const MobileNavBar = () => {
               >
                 Fluid output
               </TabsTrigger>
-              {/* <TabsTrigger value='charts'>Charts</TabsTrigger> */}
             </TabsList>
           </Tabs>
         </div>

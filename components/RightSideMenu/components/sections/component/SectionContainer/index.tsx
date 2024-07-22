@@ -64,7 +64,7 @@ const getSections = (section: string) => {
     case 'settings':
       return <MenuSectionDivider menu={menuItems} />;
     default:
-      return 'hooola';
+      return null;
   }
 };
 
@@ -73,7 +73,6 @@ const SectionContainer = () => {
 
   const sections = getSections(rightMenuSection);
 
-  console.log(rightMenuSection);
 
   return <>{sections}</>;
 };
