@@ -30,6 +30,8 @@ export function DataTable() {
   const { fluidInputRecords, setFluidInputRecords, activeDate } =
     useGlobalContext();
 
+  console.log(activeDate);
+
   useEffect(() => {
     const calcTotal = () => {
       let total = 0;
@@ -43,10 +45,12 @@ export function DataTable() {
 
   // Fetch initial data
   const fetchAllRecords = async () => {
+    console.log(activeDate);
     const { data, error } = await getTablesFromDate({
       tableName: 'fluid_input',
       activeDate,
     });
+    console.log(data);
 
     if (error) {
       console.error('Error fetching records:', error);
@@ -97,14 +101,13 @@ export function DataTable() {
   };
 
   useEffect(() => {
-    // console.log('hello');
     fetchAllRecords();
     subscribeToChanges();
     // // // Clean up the subscription on unmount
     // return () => {
     //   supabase.removeAllChannels();
     // };
-  }, []);
+  }, [activeDate]);
 
   return (
     <>

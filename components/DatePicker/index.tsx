@@ -3,13 +3,26 @@
 import * as React from 'react';
 
 import { Calendar } from '@/components/ui/calendar';
+import { useGlobalContext } from '@/context/store';
 import { format } from 'date-fns';
+import { usePathname } from 'next/navigation';
 import { Button } from '../ui/button';
 
 export function DatePicker() {
+  const pathName = usePathname();
   const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const { setActiveDate, activeDate } = useGlobalContext();
 
-  console.log(date);
+  const [selected, setSelected] = React.useState<Date>();
+
+  React.useEffect(() => {
+    if (selected) {
+      const formatDate = selected.toISOString().split('T')[0];
+      setActiveDate(formatDate);
+    }
+  }, [selected]);
+
+  // TODO: FIX THIS TO CORRECT TIME
 
   return (
     <div>
@@ -19,12 +32,23 @@ export function DatePicker() {
 
       <Calendar
         mode='single'
-        selected={date}
-        onSelect={setDate}
-        className='rounded-md border shadow'
+        selected={selected}
+        onSelect={setSelected}
+        footer={
+          selected
+            ? `Selected: ${selected.toLocaleDateString()}`
+            : 'Pick a day.'
+        }
       />
 
-      <Button className='mt-2'>View data for {format(date!, 'dd MMMM')}</Button>
+      <Button
+        className='mt-2'
+        onClick={() => {
+          window.history.pushState(null, '', `${pathName}`);
+        }}
+      >
+        View data for {format(date!, 'dd MMMM')}
+      </Button>
     </div>
   );
 }

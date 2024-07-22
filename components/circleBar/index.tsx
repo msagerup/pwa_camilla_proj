@@ -114,7 +114,7 @@ const CircleBar = () => {
     subscribeToInputChanges();
     subscribeToOutputChanges();
     // calculateValues();
-  }, []);
+  }, [activeDate]);
 
   useEffect(() => {
     const totalInputPutMl = fluidInput?.reduce((prev, current) => {
@@ -158,7 +158,7 @@ const CircleBar = () => {
         <div className='wave _0'></div>
         <div className='wave-below _0'></div>
         <div className='desc flex items-center'>
-          <h2>Today</h2>
+          <h2>{activeDate}</h2>
           <p>
             <b className='text-4xl'>
               {circlePercentage}

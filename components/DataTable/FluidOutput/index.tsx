@@ -102,7 +102,7 @@ export function DataTableFluidOut() {
     // return () => {
     //   supabase.removeAllChannels();
     // };
-  }, []);
+  }, [activeDate]);
 
   return (
     <>
